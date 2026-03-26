@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NestMind — Family coordination, finally simple.</title>
+  <meta name="description" content="Assign tasks, track routines, and keep everyone in sync — all in one place." />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --dark:  #1A1712;
+      --cream: #F8F5F0;
+      --blue:  #5B8DEF;
+      --blue-dark: #3d6fd4;
+      --muted: #9a9590;
+      --border: rgba(255,255,255,0.10);
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--dark);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--cream); letter-spacing: -0.02em; text-decoration: none;
+    }
+    .nav-logo span { color: var(--blue); }
+    .nav-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--blue); color: #fff;
+      font-size: 0.82rem; font-weight: 600;
+      text-decoration: none; padding: 8px 16px;
+      border-radius: 8px; transition: background 0.15s;
+    }
+    .nav-cta:hover { background: var(--blue-dark); }
+    .nav-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ── Hero ── */
+    .hero {
+      background: var(--dark);
+      padding: 0 48px 0;
+      display: flex; align-items: flex-end;
+      justify-content: center; gap: 64px;
+      overflow: hidden;
+    }
+
+    .hero-copy { flex: 0 0 auto; max-width: 500px; padding-bottom: 60px; align-self: flex-start; padding-top: 48px; }
+
+    .hero-copy h1 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 700; line-height: 1.1;
+      color: var(--cream); letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .hero-copy p {
+      font-size: 1.05rem; line-height: 1.7;
+      color: rgba(248,245,240,0.6);
+      margin-bottom: 36px;
+    }
+    .appstore-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--cream); color: var(--dark);
+      text-decoration: none; padding: 12px 22px;
+      border-radius: 12px; transition: opacity 0.15s;
+    }
+    .appstore-badge:hover { opacity: 0.88; }
+    .appstore-badge svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .appstore-badge-text { display: flex; flex-direction: column; line-height: 1.2; }
+    .appstore-badge-text .small {
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase; color: #5a5550;
+    }
+    .appstore-badge-text .big { font-size: 1rem; font-weight: 700; color: var(--dark); }
+
+    /* ── Phone mockup wrapper ── */
+    .hero-phone {
+      flex: 0 0 auto;
+      transform: scale(0.72);
+      transform-origin: bottom center;
+      margin-bottom: -60px;
+    }
+
+    /* ══════════════════════════════
+       PHONE SHELL
+    ══════════════════════════════ */
+    .phone {
+      width: 393px;
+      background: #F8F5F0;
+      border-radius: 54px;
+      box-shadow:
+        0 0 0 10px #0E0D0A,
+        0 0 0 11.5px #252218,
+        0 60px 120px rgba(0,0,0,0.6),
+        0 30px 60px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+      overflow: hidden;
+      position: relative;
+    }
+    .dynamic-island {
+      position: absolute; top: 12px; left: 50%;
+      transform: translateX(-50%);
+      width: 124px; height: 36px;
+      background: #060504; border-radius: 20px; z-index: 100;
+    }
+    .status-bar {
+      height: 58px; display: flex; align-items: flex-end;
+      padding: 0 28px 9px; justify-content: space-between;
+    }
+    .status-time { font-size: 15px; font-weight: 600; color: #1C1A16; letter-spacing: -0.3px; }
+    .status-icons { display: flex; align-items: center; gap: 6px; }
+    .screen-scroll { overflow-y: auto; max-height: 780px; padding-bottom: 96px; }
+    .screen-scroll::-webkit-scrollbar { display: none; }
+
+    /* Greeting */
+    .greeting-zone {
+      padding: 6px 24px 20px;
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .greeting-left { display: flex; flex-direction: column; gap: 3px; }
+    .greeting-sub { font-size: 13px; font-weight: 500; color: #B0A898; letter-spacing: 0.1px; }
+    .greeting-name {
+      font-family: 'Fraunces', serif; font-size: 30px; font-weight: 700;
+      color: #1C1A16; letter-spacing: -0.8px; line-height: 1.05;
+    }
+    .greeting-right { display: flex; gap: 9px; align-items: center; margin-top: 4px; }
+    .hdr-btn {
+      width: 40px; height: 40px; border-radius: 50%; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07); position: relative;
+    }
+    .hdr-notif::after {
+      content: ''; position: absolute; top: 9px; right: 9px;
+      width: 7px; height: 7px; background: #E85D4A; border-radius: 50%;
+      border: 1.5px solid #F8F5F0;
+    }
+    .hdr-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, #5B8DEF, #3A6BD4);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif; font-size: 16px; font-weight: 700; color: #fff;
+      box-shadow: 0 3px 10px rgba(91,141,239,0.3);
+    }
+
+    /* Smart Insight */
+    .insight-card {
+      margin: 0 22px 18px; background: #1C1A16;
+      border-radius: 22px; padding: 18px 20px;
+      position: relative; overflow: hidden;
+    }
+    .insight-card::before {
+      content: ''; position: absolute; top: -30px; right: -30px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(91,141,239,0.18) 0%, transparent 70%);
+    }
+    .insight-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 6px; position: relative; z-index: 1;
+    }
+    .insight-icon {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: rgba(91,141,239,0.18);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .insight-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #5B8DEF; margin-top: 6px;
+      box-shadow: 0 0 6px rgba(91,141,239,0.6);
+    }
+    .insight-headline {
+      font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700;
+      color: #F5F3EE; letter-spacing: -0.3px; margin-bottom: 4px; margin-top: 10px;
+      position: relative; z-index: 1;
+    }
+    .insight-sub { font-size: 13px; color: #6B6560; position: relative; z-index: 1; }
+
+    /* Overview row */
+    .overview-row { display: flex; gap: 10px; padding: 0 22px; margin-bottom: 20px; }
+    .ov-card {
+      flex: 1; background: #fff; border-radius: 20px; padding: 16px 14px;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.05);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .ov-num {
+      font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700;
+      color: #1C1A16; letter-spacing: -0.6px; line-height: 1;
+    }
+    .ov-label { font-size: 12px; font-weight: 500; color: #B0A898; line-height: 1.3; }
+    .ov-card.ov-waiting .ov-num { color: #E85D4A; }
+    .ov-card.ov-waiting { border-top: 3px solid #E85D4A; }
+    .ov-card.ov-done .ov-num { color: #34C759; }
+    .ov-card.ov-done { border-top: 3px solid #34C759; }
+    .ov-card.ov-pending .ov-num { color: #F4A261; }
+    .ov-card.ov-pending { border-top: 3px solid #F4A261; }
+
+    /* Section header */
+    .sec-hdr {
+      padding: 0 22px; margin-bottom: 11px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .sec-title { font-size: 17px; font-weight: 700; color: #1C1A16; letter-spacing: -0.3px; }
+    .sec-action { font-size: 13px; font-weight: 500; color: #5B8DEF; }
+
+    /* Tasks */
+    .tasks-list { padding: 0 22px; display: flex; flex-direction: column; gap: 9px; margin-bottom: 24px; }
+    .task-card {
+      background: #fff; border-radius: 20px; padding: 16px;
+      display: flex; align-items: center; gap: 13px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      position: relative; overflow: hidden;
+    }
+    .task-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3.5px;
+    }
+    .tc-overdue::before { background: #E85D4A; }
+    .tc-waiting::before { background: #5B8DEF; }
+    .tc-done::before    { background: #34C759; }
+    .tc-check {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid #E4E0D8; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tc-check.done-check { background: #34C759; border-color: #34C759; }
+    .tc-check.pending-check { border-color: #F4A261; border-style: dashed; }
+    .tc-body { flex: 1; }
+    .tc-name { font-size: 15px; font-weight: 600; color: #1C1A16; margin-bottom: 5px; }
+    .tc-name.tc-done-text { text-decoration: line-through; color: #B0A898; font-weight: 400; }
+    .tc-meta { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .tc-assignee { display: flex; align-items: center; gap: 5px; }
+    .tc-av-mini {
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8px; font-weight: 700; color: #fff;
+    }
+    .tc-person { font-size: 12px; font-weight: 500; color: #6B6560; }
+    .tc-time { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 20px; }
+    .time-overdue { background: rgba(232,93,74,0.1); color: #E85D4A; }
+    .time-today   { background: rgba(28,26,22,0.06); color: #6B6560; }
+    .time-done    { background: rgba(52,199,89,0.1); color: #28A745; }
+    .tc-tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; }
+    .tag-home   { background: rgba(244,162,97,0.12); color: #D4720A; }
+    .tag-school { background: rgba(91,141,239,0.1); color: #3A6BD4; }
+    .tag-health { background: rgba(52,199,89,0.1); color: #28A745; }
+    .tag-errand { background: rgba(123,188,176,0.12); color: #3A8A80; }
+    .tc-approval { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+    .tc-approval-badge {
+      font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 20px;
+      background: rgba(244,162,97,0.12); color: #D4720A; white-space: nowrap;
+    }
+    .tc-timeout { font-size: 10px; color: #B0A898; font-weight: 500; }
+    .tc-chev { opacity: 0.2; flex-shrink: 0; }
+
+    /* Family row */
+    .family-row-section { margin-bottom: 22px; }
+    .family-members-scroll { display: flex; gap: 10px; padding: 0 22px; overflow-x: auto; }
+    .family-members-scroll::-webkit-scrollbar { display: none; }
+    .fm-chip { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; }
+    .fm-av-wrap { position: relative; }
+    .fm-av {
+      width: 52px; height: 52px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Fraunces', serif; font-size: 18px; font-weight: 700; color: #fff;
+    }
+    .av-blue   { background: linear-gradient(135deg, #5B8DEF, #3A6BD4); }
+    .av-orange { background: linear-gradient(135deg, #F4A261, #E07B35); }
+    .av-green  { background: linear-gradient(135deg, #7BBCB0, #5A9E92); }
+    .av-pink   { background: linear-gradient(135deg, #E8A8B8, #D4809A); }
+    .fm-badge {
+      position: absolute; bottom: -1px; right: -1px;
+      width: 19px; height: 19px; border-radius: 50%;
+      border: 2px solid #F8F5F0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9px; font-weight: 700; color: #fff;
+    }
+    .badge-warn { background: #E85D4A; }
+    .badge-ok   { background: #34C759; }
+    .badge-wait { background: #F4A261; }
+    .fm-name { font-size: 11px; font-weight: 500; color: #6B6560; }
+    .fm-chip.fm-active .fm-name { color: #1C1A16; font-weight: 600; }
+    .fm-chip.fm-active .fm-av { box-shadow: 0 0 0 2.5px #5B8DEF, 0 0 0 4.5px #F8F5F0; }
+
+    /* FAB */
+    .fab-wrap { padding: 0 22px 16px; }
+    .fab {
+      background: #1C1A16; border-radius: 18px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 11px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.2);
+    }
+    .fab-icon {
+      width: 32px; height: 32px; border-radius: 10px; background: #5B8DEF;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 3px 10px rgba(91,141,239,0.35);
+    }
+    .fab-text { font-size: 15px; font-weight: 600; color: #F5F3EE; flex: 1; }
+    .fab-hint { font-size: 11px; color: #3A3530; }
+
+    /* Tab bar */
+    .tab-bar {
+      background: rgba(248,245,240,0.94); backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(0,0,0,0.06);
+      padding: 10px 0 28px; display: flex; justify-content: space-around;
+    }
+    .tab-item { display: flex; flex-direction: column; align-items: center; gap: 4px; opacity: 0.28; min-width: 60px; }
+    .tab-item.active { opacity: 1; }
+    .tab-label { font-size: 10px; font-weight: 500; color: #1C1A16; }
+    .tab-item.active .tab-label { color: #5B8DEF; }
+
+    /* ── Features ── */
+    .features { padding: 80px 48px 88px; }
+    .features-inner { max-width: 720px; margin: 0 auto; }
+    .features-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 40px; text-align: center;
+    }
+    .features-list {
+      list-style: none; display: flex; flex-direction: column;
+      border-top: 1px solid rgba(26,23,18,0.10);
+    }
+    .feature-item {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 28px 0; border-bottom: 1px solid rgba(26,23,18,0.10);
+    }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: 10px; background: var(--dark);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .feature-icon svg { width: 18px; height: 18px; }
+    .feature-text h3 {
+      font-family: 'Fraunces', Georgia, serif; font-size: 1.05rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 5px;
+    }
+    .feature-text p { font-size: 0.92rem; line-height: 1.6; color: #6a6560; }
+
+    /* ── Footer ── */
+    footer { background: var(--dark); padding: 32px 24px; text-align: center; }
+    footer p { font-size: 0.82rem; color: rgba(248,245,240,0.40); }
+    footer a { color: rgba(248,245,240,0.55); text-decoration: none; transition: color 0.15s; }
+    footer a:hover { color: var(--cream); }
+    footer .separator { margin: 0 10px; opacity: 0.3; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hero { flex-direction: column; align-items: center; padding: 60px 24px 0; gap: 40px; text-align: center; }
+      .hero-phone { transform: scale(0.6); transform-origin: bottom center; margin-bottom: -100px; }
+      .hero-copy { max-width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .hero-phone { transform: scale(0.46); margin-bottom: -180px; }
+      .features { padding: 60px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-logo">Nest<span>Mind</span></a>
+    <a href="#" class="nav-cta">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      App Store
+    </a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Family coordination,<br>finally simple.</h1>
+      <p>Assign tasks, track routines, and keep everyone in sync — all in one place.</p>
+      <a href="#" class="appstore-badge">
+        <svg viewBox="0 0 24 24" fill="var(--dark)"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        <div class="appstore-badge-text">
+          <span class="small">Download on the</span>
+          <span class="big">App Store</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Phone mockup -->
+    <div class="hero-phone" aria-hidden="true">
+      <div class="phone">
+        <div class="dynamic-island"></div>
+
+        <div class="status-bar">
+          <span class="status-time">9:41</span>
+          <div class="status-icons">
+            <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="6" width="3" height="6" rx="1" fill="#1C1C1E"/><rect x="4.5" y="4" width="3" height="8" rx="1" fill="#1C1C1E"/><rect x="9" y="2" width="3" height="10" rx="1" fill="#1C1C1E"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#1C1C1E" opacity="0.25"/></svg>
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 9.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" fill="#1C1C1E"/><path d="M3.5 6.5C4.9 5.1 6.35 4.4 8 4.4s3.1.7 4.5 2.1" stroke="#1C1C1E" stroke-width="1.5" stroke-linecap="round" fill="none"/><path d="M1 3.5C3.2 1.3 5.5 0.2 8 0.2s4.8 1.1 7 3.3" stroke="#1C1C1E" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>
+            <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="0.5" width="21" height="11" rx="3.5" stroke="#1C1C1E" stroke-opacity="0.35"/><rect x="2" y="2" width="16" height="8" rx="2" fill="#1C1C1E"/><path d="M23 4v4a2 2 0 000-4z" fill="#1C1C1E" opacity="0.4"/></svg>
+          </div>
+        </div>
+
+        <div class="screen-scroll">
+          <!-- Greeting -->
+          <div class="greeting-zone">
+            <div class="greeting-left">
+              <span class="greeting-sub">Tuesday · March 4</span>
+              <span class="greeting-name">Good morning,<br>Anna ☀️</span>
+            </div>
+            <div class="greeting-right">
+              <div class="hdr-btn hdr-notif">
+                <svg width="18" height="19" viewBox="0 0 18 19" fill="none"><path d="M9 2a5 5 0 015 5v3l1.5 2.5H2.5L4 10V7a5 5 0 015-5z" stroke="#1C1A16" stroke-width="1.6" fill="none" stroke-linejoin="round"/><path d="M7 14.5a2 2 0 004 0" stroke="#1C1A16" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+              </div>
+              <div class="hdr-avatar">A</div>
+            </div>
+          </div>
+
+          <!-- Smart Insight -->
+          <div class="insight-card">
+            <div class="insight-top">
+              <div class="insight-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2a4 4 0 014 4c0 2-1.5 3.5-1.5 5H5.5C5.5 9.5 4 8 4 6a4 4 0 014-4z" stroke="#5B8DEF" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M6 13h4M7 15h2" stroke="#5B8DEF" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              <div class="insight-dot"></div>
+            </div>
+            <div class="insight-headline">Busy afternoon ahead</div>
+            <div class="insight-sub">3 family events after 16:00 · Mark has a heavy workload today</div>
+          </div>
+
+          <!-- Overview -->
+          <div class="overview-row">
+            <div class="ov-card ov-waiting"><div class="ov-num">3</div><div class="ov-label">tasks<br>waiting</div></div>
+            <div class="ov-card ov-pending"><div class="ov-num">2</div><div class="ov-label">pending<br>approval</div></div>
+            <div class="ov-card ov-done"><div class="ov-num">5</div><div class="ov-label">done<br>today</div></div>
+          </div>
+
+          <!-- Today's Tasks -->
+          <div class="sec-hdr">
+            <span class="sec-title">Today's Tasks</span>
+            <span class="sec-action">See all</span>
+          </div>
+
+          <div class="tasks-list">
+            <div class="task-card tc-overdue">
+              <div class="tc-check"></div>
+              <div class="tc-body">
+                <div class="tc-name">Grocery shopping</div>
+                <div class="tc-meta">
+                  <div class="tc-assignee"><div class="tc-av-mini av-orange">M</div><span class="tc-person">Mark</span></div>
+                  <span class="tc-time time-overdue">2h overdue</span>
+                  <span class="tc-tag tag-home">Home</span>
+                </div>
+              </div>
+              <div class="tc-approval"><span class="tc-approval-badge">⏳ No response</span><span class="tc-timeout">Sent 6h ago</span></div>
+            </div>
+
+            <div class="task-card tc-waiting">
+              <div class="tc-check pending-check"></div>
+              <div class="tc-body">
+                <div class="tc-name">School pickup — Lily</div>
+                <div class="tc-meta">
+                  <div class="tc-assignee"><div class="tc-av-mini av-blue">A</div><span class="tc-person">Anna</span></div>
+                  <span class="tc-time time-today">15:30</span>
+                  <span class="tc-tag tag-school">School</span>
+                </div>
+              </div>
+              <div class="tc-approval"><span class="tc-approval-badge">Pending</span></div>
+            </div>
+
+            <div class="task-card tc-done">
+              <div class="tc-check done-check">
+                <svg width="12" height="9" viewBox="0 0 12 9" fill="none"><path d="M1 4.5L4.5 8l6.5-7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="tc-body">
+                <div class="tc-name tc-done-text">Doctor appointment booked</div>
+                <div class="tc-meta">
+                  <div class="tc-assignee"><div class="tc-av-mini av-blue">A</div><span class="tc-person">Anna</span></div>
+                  <span class="tc-time time-done">Done</span>
+                  <span class="tc-tag tag-health">Health</span>
+                </div>
+              </div>
+              <svg class="tc-chev" width="7" height="12" viewBox="0 0 7 12" fill="none"><path d="M1 1l5 5-5 5" stroke="#1C1A16" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+
+          <!-- Family -->
+          <div class="family-row-section">
+            <div class="sec-hdr"><span class="sec-title">Family</span><span class="sec-action">Manage</span></div>
+            <div class="family-members-scroll">
+              <div class="fm-chip fm-active">
+                <div class="fm-av-wrap"><div class="fm-av av-blue">A</div><div class="fm-badge badge-ok">✓</div></div>
+                <span class="fm-name">Anna</span>
+              </div>
+              <div class="fm-chip">
+                <div class="fm-av-wrap"><div class="fm-av av-orange">M</div><div class="fm-badge badge-warn">3</div></div>
+                <span class="fm-name">Mark</span>
+              </div>
+              <div class="fm-chip">
+                <div class="fm-av-wrap"><div class="fm-av av-green">L</div><div class="fm-badge badge-ok">✓</div></div>
+                <span class="fm-name">Lily</span>
+              </div>
+              <div class="fm-chip">
+                <div class="fm-av-wrap"><div class="fm-av av-pink">E</div><div class="fm-badge badge-wait">1</div></div>
+                <span class="fm-name">Ece</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAB -->
+          <div class="fab-wrap">
+            <div class="fab">
+              <div class="fab-icon">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+              </div>
+              <span class="fab-text">Add task</span>
+              <span class="fab-hint">Quick add ↑</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab bar -->
+        <div class="tab-bar">
+          <div class="tab-item active">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" color="#5B8DEF"><path d="M3 9.5L11 3l8 6.5V19a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linejoin="round"/></svg>
+            <span class="tab-label">Home</span>
+          </div>
+          <div class="tab-item">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 6h14M4 11h14M4 16h10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <span class="tab-label">Tasks</span>
+          </div>
+          <div class="tab-item">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="3" y="4" width="16" height="15" rx="3" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M7 3v2M15 3v2M3 9h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <span class="tab-label">Calendar</span>
+          </div>
+          <div class="tab-item">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="8" cy="7" r="3" stroke="currentColor" stroke-width="1.7" fill="none"/><circle cx="15" cy="9" r="2.5" stroke="currentColor" stroke-width="1.6" fill="none"/><path d="M2 18c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" fill="none"/><path d="M15 14c1.9.4 3.5 2 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+            <span class="tab-label">Family</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="features-inner">
+      <p class="features-label">What's inside</p>
+      <ul class="features-list">
+        <li class="feature-item">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#5B8DEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="feature-text">
+            <h3>Tasks</h3>
+            <p>Create, assign, and track household tasks for every family member — with priority levels and real-time status updates.</p>
+          </div>
+        </li>
+        <li class="feature-item">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#5B8DEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          </div>
+          <div class="feature-text">
+            <h3>Routines</h3>
+            <p>Build recurring checklists for morning routines, school prep, bedtime — so nothing falls through the cracks on busy days.</p>
+          </div>
+        </li>
+        <li class="feature-item">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#5B8DEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="feature-text">
+            <h3>Smart Insights</h3>
+            <p>See who's carrying the load and get gentle suggestions to balance responsibilities across your household.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      &copy; 2025 NestMind
+      <span class="separator">&middot;</span>
+      <a href="privacy.html">Privacy Policy</a>
+      <span class="separator">&middot;</span>
+      <a href="terms.html">Terms of Use</a>
+      <span class="separator">&middot;</span>
+      <a href="support.html">Support</a>
+    </p>
+  </footer>
+
+</body>
+</html>
