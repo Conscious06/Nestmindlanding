@@ -68,6 +68,34 @@
     }
 
     .nav-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .nav-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+    }
+    .lang-btn {
+      color: rgba(248,245,240,0.76);
+      text-decoration: none;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 4px 7px;
+      border-radius: 6px;
+    }
+    .lang-btn:hover,
+    .lang-btn.active {
+      color: var(--cream);
+      background: rgba(91,141,239,0.28);
+    }
 
     /* ── Page wrapper ─────────────────────────────────────────── */
     .page {
@@ -194,8 +222,20 @@
     footer .separator { margin: 0 10px; opacity: 0.3; }
 
     /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .nav-right { gap: 8px; }
+      .lang-btn { padding: 4px 6px; font-size: 0.68rem; }
+      .nav-cta { padding: 8px 12px; font-size: 0.76rem; }
+    }
+
     @media (max-width: 480px) {
       nav { padding: 0 16px; }
+      .nav-cta {
+        width: 34px;
+        padding: 8px;
+        justify-content: center;
+      }
+      .nav-cta span { display: none; }
       .page { padding: 48px 20px 72px; }
     }
   </style>
@@ -205,21 +245,28 @@
   <!-- Nav -->
   <nav>
     <a href="index.html" class="nav-logo">Nest<span>Mind</span></a>
-    <a href="#" class="nav-cta" aria-label="Download on the App Store">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-      </svg>
-      App Store
-    </a>
+    <div class="nav-right">
+      <div class="lang-switch" aria-label="Language selector">
+        <a href="?lang=en" class="lang-btn" data-lang-btn="en">EN</a>
+        <a href="?lang=tr" class="lang-btn" data-lang-btn="tr">TR</a>
+        <a href="?lang=es" class="lang-btn" data-lang-btn="es">ES</a>
+      </div>
+      <a href="#" class="nav-cta" data-i18n="app-store-cta" aria-label="Download on the App Store">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <span>App Store</span>
+      </a>
+    </div>
   </nav>
 
   <!-- Content -->
   <main class="page" role="main">
 
     <header class="page-header">
-      <p class="page-label">Legal</p>
-      <h1>Privacy Policy</h1>
-      <p class="meta">Effective date: March 1, 2025 &nbsp;&middot;&nbsp; Last updated: March 2025</p>
+      <p class="page-label" data-i18n="page-label">Legal</p>
+      <h1 data-i18n="page-title">Privacy Policy</h1>
+      <p class="meta" data-i18n="page-meta">Effective date: March 1, 2025 &nbsp;&middot;&nbsp; Last updated: March 2025</p>
     </header>
 
     <div class="prose">
@@ -363,13 +410,18 @@
     <p>
       &copy; 2025 NestMind
       <span class="separator">&middot;</span>
-      <a href="privacy.html">Privacy Policy</a>
+      <a href="privacy.html" data-i18n="footer-privacy">Privacy Policy</a>
       <span class="separator">&middot;</span>
-      <a href="terms.html">Terms of Use</a>
+      <a href="terms.html" data-i18n="footer-terms">Terms of Use</a>
       <span class="separator">&middot;</span>
-      <a href="support.html">Support</a>
+      <a href="support.html" data-i18n="footer-support">Support</a>
     </p>
   </footer>
+
+  <script src="legal-i18n.js"></script>
+  <script>
+    applyLegalLanguage("privacy");
+  </script>
 
 </body>
 </html>
