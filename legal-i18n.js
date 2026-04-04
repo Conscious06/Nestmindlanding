@@ -7,7 +7,7 @@
         description: "NestMind Privacy Policy — how we collect, use, and protect your data.",
         pageLabel: "Legal",
         pageTitle: "Privacy Policy",
-        pageMeta: "Effective date: March 1, 2025 · Last updated: March 2025",
+        pageMeta: "Effective date: April 4, 2026 · Last updated: April 2026",
         appStoreCta: "App Store",
         appStoreAria: "Download on the App Store",
         footerPrivacy: "Privacy Policy",
@@ -23,7 +23,7 @@
         description: "NestMind Gizlilik Politikası — verilerinizi nasıl topladığımız, kullandığımız ve koruduğumuz.",
         pageLabel: "Yasal",
         pageTitle: "Gizlilik Politikası",
-        pageMeta: "Yürürlük tarihi: 1 Mart 2025 · Son güncelleme: Mart 2025",
+        pageMeta: "Yürürlük tarihi: 4 Nisan 2026 · Son güncelleme: Nisan 2026",
         appStoreCta: "App Store",
         appStoreAria: "App Store'dan indir",
         footerPrivacy: "Gizlilik Politikası",
@@ -109,7 +109,7 @@
             <h2>6. Çocukların Gizliliği (COPPA)</h2>
             <p>NestMind yetişkinler ve aileler için tasarlanmıştır. Uygulama, ebeveynlerin/vasilerin aile grubu içinde çocuk profilleri oluşturmasına izin verir. Çocuklar bağımsız hesap açmaz.</p>
             <p>Çocuk profilleri yalnızca ebeveyn/vasi tarafından girilen ad ve isteğe bağlı avatar bilgisini içerir. 13 yaş altı çocuklardan doğrulanabilir ebeveyn onayı olmadan doğrudan kişisel veri topladığımızı bilmiyoruz.</p>
-            <p>13 yaş altı bir çocuğa ait verinin uygun onay olmadan toplandığını düşünüyorsanız lütfen <a href="mailto:support@nestmind.app">support@nestmind.app</a> adresinden bize yazın.</p>
+            <p>13 yaş altı bir çocuğa ait verinin uygun onay olmadan toplandığını düşünüyorsanız lütfen <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a> adresinden bize yazın.</p>
           </section>
 
           <section id="your-rights">
@@ -123,7 +123,7 @@
               <li><strong>GDPR (EEA/BK):</strong> İşlemeye itiraz etme, kısıtlama isteme ve denetim otoritesine şikayet hakkı.</li>
               <li><strong>CCPA (California):</strong> Kişisel bilgi satmıyoruz; hangi verileri topladığımızı öğrenme ve silme talep etme hakkı.</li>
             </ul>
-            <p>Haklarınızı kullanmak için <a href="mailto:support@nestmind.app">support@nestmind.app</a> adresinden bize ulaşın. Genellikle 30 gün içinde yanıtlarız.</p>
+            <p>Haklarınızı kullanmak için <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a> adresinden bize ulaşın. Genellikle 30 gün içinde yanıtlarız.</p>
           </section>
 
           <section id="security">
@@ -135,7 +135,7 @@
           <section id="contact">
             <h2>9. İletişim</h2>
             <p>Bu Gizlilik Politikası hakkında sorularınız veya veri hakları talepleriniz için bizimle iletişime geçebilirsiniz:</p>
-            <p><strong>NestMind App</strong><br>Email: <a href="mailto:support@nestmind.app">support@nestmind.app</a></p>
+            <p><strong>NestMind App</strong><br>Email: <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a></p>
             <p>Gizlilik taleplerini ciddiyetle ele alır ve genellikle 5 iş günü içinde dönüş yaparız.</p>
           </section>
 
@@ -151,7 +151,7 @@
         description: "Política de Privacidad de NestMind: cómo recopilamos, usamos y protegemos tus datos.",
         pageLabel: "Legal",
         pageTitle: "Política de Privacidad",
-        pageMeta: "Fecha de entrada en vigor: 1 de marzo de 2025 · Última actualización: marzo de 2025",
+        pageMeta: "Fecha de entrada en vigor: 4 de abril de 2026 · Última actualización: abril de 2026",
         appStoreCta: "App Store",
         appStoreAria: "Descargar en App Store",
         footerPrivacy: "Política de Privacidad",
@@ -237,7 +237,7 @@
             <h2>6. Privacidad infantil (COPPA)</h2>
             <p>NestMind está diseñada para adultos y familias. La App permite que adultos creen perfiles infantiles dentro del grupo familiar. Los menores no crean cuentas propias ni usan el sistema de autenticación directamente.</p>
             <p>Los perfiles infantiles contienen solo nombre y avatar opcional, aportados por el padre/madre o tutor. No recopilamos de forma consciente datos personales directamente de menores de 13 años sin consentimiento verificable.</p>
-            <p>Si crees que hemos recopilado información de un menor de 13 años sin el consentimiento adecuado, escríbenos a <a href="mailto:support@nestmind.app">support@nestmind.app</a>.</p>
+            <p>Si crees que hemos recopilado información de un menor de 13 años sin el consentimiento adecuado, escríbenos a <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a>.</p>
           </section>
 
           <section id="your-rights">
@@ -251,7 +251,7 @@
               <li><strong>GDPR (UE/Reino Unido):</strong> derecho de oposición, limitación y reclamación ante la autoridad competente.</li>
               <li><strong>CCPA (California):</strong> no vendemos datos personales; puedes conocer qué datos recopilamos y solicitar su eliminación.</li>
             </ul>
-            <p>Para ejercer estos derechos, contáctanos en <a href="mailto:support@nestmind.app">support@nestmind.app</a>. Respondemos normalmente en 30 días.</p>
+            <p>Para ejercer estos derechos, contáctanos en <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a>. Respondemos normalmente en 30 días.</p>
           </section>
 
           <section id="security">
@@ -263,7 +263,7 @@
           <section id="contact">
             <h2>9. Contacto</h2>
             <p>Si tienes preguntas sobre esta Política de Privacidad o deseas ejercer tus derechos, contáctanos:</p>
-            <p><strong>NestMind App</strong><br>Email: <a href="mailto:support@nestmind.app">support@nestmind.app</a></p>
+            <p><strong>NestMind App</strong><br>Email: <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a></p>
             <p>Respondemos consultas de privacidad en aproximadamente 5 días hábiles.</p>
           </section>
 
@@ -329,7 +329,7 @@
             <ul>
               <li>Doğru, güncel ve eksiksiz bilgi sağlamak</li>
               <li>Hesap bilgilerinizi korumak ve paylaşmamak</li>
-              <li>Yetkisiz erişim şüphesi halinde <a href="mailto:support@nestmind.app">support@nestmind.app</a> adresine bildirmek</li>
+              <li>Yetkisiz erişim şüphesi halinde <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a> adresine bildirmek</li>
               <li>Hesabınız altında gerçekleşen faaliyetlerden sorumlu olmak</li>
             </ul>
             <p>İhlal, yanıltıcı bilgi veya güvenlik riski halinde hesapları askıya alabilir veya sonlandırabiliriz.</p>
@@ -380,7 +380,7 @@
             <h2>6. Çocuk Profilleri ve Ebeveyn Sorumluluğu</h2>
             <p>NestMind, yetişkin kullanıcıların aile grubuna çocuk profili eklemesine izin verir. Çocuklar kendi giriş bilgileriyle bağımsız hesap oluşturmaz.</p>
             <p>Çocuk profili ekleyen yetişkin; gerekli yetkiye sahip olduğunu, profil kullanımından sorumlu olduğunu ve çocukla ilgili atamaları denetleyeceğini kabul eder.</p>
-            <p>13 yaş altı çocuklardan doğrudan kişisel veri topladığımızı bilmiyoruz. Böyle bir durumdan şüpheleniyorsanız bize yazın: <a href="mailto:support@nestmind.app">support@nestmind.app</a>.</p>
+            <p>13 yaş altı çocuklardan doğrudan kişisel veri topladığımızı bilmiyoruz. Böyle bir durumdan şüpheleniyorsanız bize yazın: <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a>.</p>
           </section>
 
           <section id="ip">
@@ -420,7 +420,7 @@
           <section id="contact">
             <h2>12. İletişim</h2>
             <p>Bu Koşullar hakkında soru veya geri bildiriminiz varsa bizimle iletişime geçin:</p>
-            <p><strong>NestMind App</strong><br>Email: <a href="mailto:support@nestmind.app">support@nestmind.app</a></p>
+            <p><strong>NestMind App</strong><br>Email: <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a></p>
             <p>Genellikle 5 iş günü içinde yanıt veririz.</p>
           </section>
         `
@@ -462,7 +462,7 @@
             <ul>
               <li>Proporcionar información veraz, actual y completa</li>
               <li>Mantener seguras tus credenciales y no compartirlas</li>
-              <li>Notificarnos accesos no autorizados en <a href="mailto:support@nestmind.app">support@nestmind.app</a></li>
+              <li>Notificarnos accesos no autorizados en <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a></li>
               <li>Asumir responsabilidad por actividad bajo tu cuenta</li>
             </ul>
             <p>Podemos suspender o terminar cuentas comprometidas o que incumplan estos Términos.</p>
@@ -513,7 +513,7 @@
             <h2>6. Perfiles infantiles y responsabilidad parental</h2>
             <p>NestMind permite que usuarios adultos agreguen perfiles infantiles al grupo familiar. Los menores no crean credenciales propias ni operan la App de forma independiente.</p>
             <p>Al agregar un perfil infantil, el titular adulto confirma que tiene autoridad para hacerlo y asume la responsabilidad por el uso vinculado a ese perfil.</p>
-            <p>No recopilamos intencionadamente datos personales directamente de menores de 13 años. Si detectas un caso, contáctanos: <a href="mailto:support@nestmind.app">support@nestmind.app</a>.</p>
+            <p>No recopilamos intencionadamente datos personales directamente de menores de 13 años. Si detectas un caso, contáctanos: <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a>.</p>
           </section>
 
           <section id="ip">
@@ -553,7 +553,7 @@
           <section id="contact">
             <h2>12. Contacto</h2>
             <p>Si tienes dudas, comentarios o reclamaciones sobre estos Términos, contáctanos:</p>
-            <p><strong>NestMind App</strong><br>Email: <a href="mailto:support@nestmind.app">support@nestmind.app</a></p>
+            <p><strong>NestMind App</strong><br>Email: <a href="mailto:nestmind-support@gmail.com">nestmind-support@gmail.com</a></p>
             <p>Intentamos responder todas las consultas en 5 días hábiles.</p>
           </section>
         `
